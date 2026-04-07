@@ -125,4 +125,4 @@ class _TorchTensorRTConstantFolder(ConstantFolder):  # type: ignore[misc]
 
         if node.target in self.quantization_ops:
             return True
-        return False
+        return super().is_impure(node)
