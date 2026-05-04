@@ -120,6 +120,19 @@ class _TorchTensorRTConstantFolder(ConstantFolder):  # type: ignore[misc]
         except Exception as e:
             pass
 
+        try:
+            import torchao  # noqa: F401
+
+            assert torch.ops.torchao.dequantize_affine.default
+            self.quantization_ops.add(torch.ops.torchao.dequantize_affine.default)
+        except Exception as e:
+            logger.warning(
+                "Failed to register torchao.dequantize_affine for constant-folding "
+                "exclusion; torchao weight-only quantization may produce pre-folded "
+                "weights instead of QDQ patterns. Error: %s",
+                e,
+            )
+
     # TODO: Update this function when quantization is added
     def is_impure(self, node: torch.fx.node.Node) -> bool:
 
