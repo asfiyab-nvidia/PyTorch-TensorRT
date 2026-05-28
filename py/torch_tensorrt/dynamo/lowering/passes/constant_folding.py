@@ -123,11 +123,11 @@ class _TorchTensorRTConstantFolder(ConstantFolder):  # type: ignore[misc]
         try:
             import torchao  # noqa: F401
 
-            assert torch.ops.torchao.dequantize_affine.default
-            self.quantization_ops.add(torch.ops.torchao.dequantize_affine.default)
+            assert torch.ops.torchao.dequantize_affine_float8_non_decomposed.default
+            self.quantization_ops.add(torch.ops.torchao.dequantize_affine_float8_non_decomposed.default)
         except Exception as e:
             logger.warning(
-                "Failed to register torchao.dequantize_affine for constant-folding "
+                "Failed to register torch.ops.torchao.dequantize_affine_float8_non_decomposed for constant-folding "
                 "exclusion; torchao weight-only quantization may produce pre-folded "
                 "weights instead of QDQ patterns. Error: %s",
                 e,
